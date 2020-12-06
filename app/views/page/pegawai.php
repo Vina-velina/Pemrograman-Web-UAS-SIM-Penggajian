@@ -14,6 +14,7 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">Foto</th>
                             <th scope="col">Email</th>
                             <th scope="col">Nama User</th>
                             <th scope="col">Jabatan</th>
@@ -28,7 +29,8 @@
                         $i = 1;
                         foreach ($data['pegawai'] as $data) { ?>
                         <tr>
-                            <th scope="row"><?= $i++ ?></th>
+                            <td scope="row"><?= $i++ ?></td>
+                            <td><img src="<?= BASEURL?>/upload/<?=$data['foto_user']?>?" alt="" width="75px"></td>
                             <td><?= $data['email'] ?></td>
                             <td><?= $data['nama_user'] ?></td>
                             <td>
@@ -52,7 +54,7 @@
                             <td> <a href="<?= BASEURL ?>/user/ubah_user/<?= $data['id'] ?>"><button
                                         class="btn btn-warning">Ubah</button></a>
                                 <a href="<?= BASEURL ?>/user/hapus_user/<?= $data['id'] ?>"><button
-                                        class="btn btn-danger">Hapus</button></a>
+                                        class="btn btn-danger mt-2">Hapus</button></a>
                             </td>
                         </tr>
                         <?php } ?>
