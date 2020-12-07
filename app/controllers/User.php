@@ -96,6 +96,12 @@ class User extends Controller
             }
         }
     }
+    public function ajax($id = '')
+    {
+
+        $data['pegawai'] = $this->model('User_model')->getAllUserWhere($id);
+        $this->view('page/table', $data);
+    }
     public function tambah_pegawai()
     {
         if (!isset($_SESSION['login'])) {

@@ -46,6 +46,13 @@ class User_model
         $this->db->query('SELECT*FROM user');
         return $this->db->resulSet();
     }
+    public function getAllUserWhere($data)
+    {
+        $this->db->query("SELECT * FROM user WHERE nama_user LIKE :nama OR email LIKE :email");
+        $this->db->bind('nama', "%" . $data . "%");
+        $this->db->bind('email', "%" . $data . "%");
+        return $this->db->resulSet();
+    }
     public function getAllUserNoAdmin()
     {
         $this->db->query('SELECT*FROM user WHERE jabatan != 1');

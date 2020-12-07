@@ -7,9 +7,20 @@
         <div class="jumbotron ">
             <h1 class="display-5">Data Pegawai</h1>
             <hr class="my-4">
-            <a href="<?= BASEURL ?>/user/tambah_pegawai"><button class="btn btn-primary mb-3">Tambah
-                    Data</button></a>
-            <div class="table-responsive">
+            <div class="row">
+                <div class="col-lg-4">
+                    <a href="<?= BASEURL ?>/user/tambah_pegawai"><button class="btn btn-primary mb-3">Tambah
+                            Data</button></a>
+                </div>
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <form>
+                        <input class="form-control" id="search_pegawai" type="text"
+                            placeholder="Cari Nama atau Email Pegawai" name="search">
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive" id="result">
                 <table class="table table-primary">
                     <thead>
                         <tr>
@@ -30,7 +41,7 @@
                         foreach ($data['pegawai'] as $data) { ?>
                         <tr>
                             <td scope="row"><?= $i++ ?></td>
-                            <td><img src="<?= BASEURL?>/upload/<?=$data['foto_user']?>?" alt="" width="75px"></td>
+                            <td><img src="<?= BASEURL ?>/upload/<?= $data['foto_user'] ?>?" alt="" width="75px"></td>
                             <td><?= $data['email'] ?></td>
                             <td><?= $data['nama_user'] ?></td>
                             <td>
