@@ -19,13 +19,15 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="hadir">Jumlah Hadir Perbulan</label>
-                        <input required type="number" class="form-control" id="hadir" name="hadir" max="31" min="0">
+                        <label for="hadir">Pembayaran Untuk Bulan</label>
+                        <input required type="date" class="form-control" id="tanggal" min="<?= date('Y-m-d') ?>"
+                            name="tanggal" max="31" min="0">
                     </div>
                     <div class="form-group">
-                        <label for="ijin">Jumlah Ijin Perbulan</label>
+                        <label for="hadir">Jumlah Ijin Perbulan</label>
                         <input required type="number" class="form-control" id="ijin" name="ijin" max="31" min="0">
                     </div>
+
                     <button type="submit" class="btn btn-primary" value="SUBMIT" name="submit">Tambah Data</button>
                 </form>
             </div>

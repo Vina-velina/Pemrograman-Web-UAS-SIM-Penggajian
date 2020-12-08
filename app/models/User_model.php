@@ -124,22 +124,14 @@ class User_model
         $this->db->query('SELECT gaji_user.*, user.nama_user FROM gaji_user INNER JOIN user ON user.id=gaji_user.id_user');
         return $this->db->resulSet();
     }
-    public function cekBulanGaji($user, $bulan)
-    {
-        $query = "SELECT * FROM gaji_user WHERE id_user =:id_user AND nama_bulan=:bulan";
-        $this->db->query($query);
-        $this->db->bind('id_user', $user);
-        $this->db->bind('bulan', $bulan);
-        $this->db->execute();
-        return $this->db->rowCount();
-    }
-    public function inputGaji($data, $bulan, $besar_gaji, $total_gaji, $create_by)
+
+    public function inputGaji($data, $bulan, $besar_gaji, $total_gaji, $create_by, $hadir)
     {
         $query = "INSERT INTO gaji_user (id_user,nama_bulan,jumlah_hadir,jumlah_ijin,besar_gaji,total_gaji,status,create_by) VALUES (:id_user,:bulan,:hadir,:ijin,:besar,:total,:status,:create_by)";
         $this->db->query($query);
         $this->db->bind('id_user', $data['pegawai']);
         $this->db->bind('bulan', $bulan);
-        $this->db->bind('hadir', $data['hadir']);
+        $this->db->bind('hadir', $hadir);
         $this->db->bind('ijin', $data['ijin']);
         $this->db->bind('besar', $besar_gaji);
         $this->db->bind('total', $total_gaji);
@@ -170,11 +162,12 @@ class User_model
         $this->db->execute();
         return $this->db->rowCount();
     }
-    public function editGajiUser($data, $id, $total_gaji)
+    public function editGajiUser($data, $id, $total_gaji, $bulan, $hadir)
     {
-        $query = "UPDATE gaji_user SET jumlah_hadir=:hadir,jumlah_ijin=:ijin,total_gaji=:gaji WHERE id=:id_user";
+        $query = "UPDATE gaji_user SET jumlah_hadir=:hadir,nama_bulan=:nama_bulan,jumlah_ijin=:ijin,total_gaji=:gaji WHERE id=:id_user";
         $this->db->query($query);
-        $this->db->bind('hadir', $data['hadir']);
+        $this->db->bind('hadir', $hadir);
+        $this->db->bind('nama_bulan', $bulan);
         $this->db->bind('ijin', $data['ijin']);
         $this->db->bind('gaji', $total_gaji);
         $this->db->bind('id_user', $id);

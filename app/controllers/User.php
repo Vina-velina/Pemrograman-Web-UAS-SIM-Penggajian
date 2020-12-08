@@ -412,8 +412,10 @@ class User extends Controller
                 $data['detail_gaji'] = $gaji_cari;
 
                 if (isset($_POST['submit'])) {
-                    $total_gaji = $gaji_cari[0]['besar_gaji'] * $_POST['hadir'];
-                    if ($this->model('User_model')->editGajiUser($_POST, $id, $total_gaji) > 0) {
+                    $bulan = $_POST['tanggal'];
+                    $hadir = 31 - $_POST['ijin'];
+                    $total_gaji = $gaji_cari[0]['besar_gaji'] * $hadir;
+                    if ($this->model('User_model')->editGajiUser($_POST, $id, $total_gaji, $bulan, $hadir) > 0) {
                         Flasher::setflash('Berhasil', 'Diubah Dan Diperbaharui', 'success');
                         header('Location:' . BASEURL . '/user/data_gaji');
                         exit;
@@ -520,24 +522,19 @@ class User extends Controller
                 // Ini adalah data yang akan dikirim ke halaman
                 $data['title'] = "Tambah Gaji Pegawai";
                 $data['pegawai'] = $this->model('User_model')->getAllUserNoAdmin();
-                $bulan = date('F Y');
                 if (isset($_POST['submit'])) {
-                    if ($this->model('User_model')->cekBulanGaji($_POST['pegawai'], $bulan) > 0) {
-                        Flasher::setflash('Gagal', 'Gaji Dibulan "' . date('F Y') . '" Untuk Karyawan Yang Dipilih Sudah Diatur Sebelumnya', 'danger');
-                        header('Location:' . BASEURL . '/user/tambah_gaji');
+                    $bulan = $_POST['tanggal'];
+                    $hadir = 31 - $_POST['ijin'];
+                    $total_gaji = $hadir * $besar_gaji;
+                    $create_by = $session[0]['nama_user'];
+                    if ($this->model('User_model')->inputGaji($_POST, $bulan, $besar_gaji, $total_gaji, $create_by, $hadir) > 0) {
+                        Flasher::setflash('Berhasil', 'Ditambahkan', 'success');
+                        header('Location:' . BASEURL . '/user/data_gaji');
                         exit;
                     } else {
-                        $total_gaji = $_POST['hadir'] * $besar_gaji;
-                        $create_by = $session[0]['nama_user'];
-                        if ($this->model('User_model')->inputGaji($_POST, $bulan, $besar_gaji, $total_gaji, $create_by) > 0) {
-                            Flasher::setflash('Berhasil', 'Ditambahkan', 'success');
-                            header('Location:' . BASEURL . '/user/data_gaji');
-                            exit;
-                        } else {
-                            Flasher::setflash('Gagal', 'Ditambahkan, Terjadi Kesahalan Dalam Penginputan', 'danger');
-                            header('Location:' . BASEURL . '/user/data_gaji');
-                            exit;
-                        }
+                        Flasher::setflash('Gagal', 'Ditambahkan, Terjadi Kesahalan Dalam Penginputan', 'danger');
+                        header('Location:' . BASEURL . '/user/data_gaji');
+                        exit;
                     }
                 } else {
                     // Menyusun website
